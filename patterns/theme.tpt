@@ -1,0 +1,66 @@
+# Crimson theme for GRUB2
+
+# general settings
+title-color: "#$main-color"
+title-font: "Trump42 Regular 42"
+#title-text: "Crimson Boot"
+
+desktop-image: "background.png"
+
+terminal-left: "2%"
+terminal-top: "2%"
+terminal-width: "96%"
+terminal-height: "96%"
+terminal-border: "0"
+terminal-font: "IosevkaM26 Regular 26"
+
+# this thing dosn't work
+# use custom.cfg to set terminal background
+#terminal-box: "terminal_box_*.png"
+
+# boot menu
++ boot_menu {
+	left = 8%
+	width = 65%
+	top = 15%
+	height = 70%
+
+	item_color = "#$second-color"
+	item_font = "Trump42 Regular 42"
+
+	selected_item_color= "#$main-color"
+	selected_item_pixmap_style = "selector_*.png"
+
+	icon_height = 0
+	icon_width = 5
+
+	item_height = 42
+	item_padding = 0
+	item_icon_space = 0
+	item_spacing = 10
+
+	scrollbar = false
+}
+
+# hotkeys image
++ image {
+	top = 100%-120
+	left = 760
+	width = 400
+	height = 42
+
+	file = "keys.png"
+}
+
+# progress bar
++ progress_bar {
+	id = "__timeout__"
+
+	left = 0
+	top = 100%
+	height = 24
+	width = 100%
+
+	#bar_style = "bar_bg_*.png"
+	highlight_style = "bar_*.png"
+}

@@ -68,12 +68,12 @@ def build_config(options):
 		output_.write(txt)
 
 
-def build_background(options):
-	if options.background is None or not os.path.isfile(options.background):
+def build_background(image):
+	if image is not None and os.path.isfile(image):
+		background = image
+	else:
 		print("Using default background")
 		background = os.path.join(_theme_path, 'terminal_bg.png')
-	else:
-		background = options.background
 
 	_run(['cp', background, os.path.join(_theme_path, 'background.png')])
 
@@ -84,7 +84,7 @@ def build_theme(options):
 
 	build_images(options)
 	build_config(options)
-	build_background(options)
+	build_background(options.background)
 
 
 def parse_command_line():
@@ -95,6 +95,10 @@ def parse_command_line():
 	parser.add_argument('--bg-color', '-b', metavar='RRGGBB', default='1A1A1A', help='Background theme color')
 
 	options = parser.parse_args()
+
+	if isinstance(options.background, str) and options.background[0] != '/':
+		options.background = os.path.join(_base_path, options.background)
+
 	return options
 
 

@@ -9,3 +9,6 @@ dev-resources/
 
 # Theme presets
 presets/
+
+# Preview script
+preview.sh

@@ -12,6 +12,11 @@ _base_path = os.path.dirname(os.path.abspath(__file__))
 _pattern_path = os.path.join(_base_path, 'patterns')
 _theme_path = os.path.join(_base_path, 'crimson')
 
+_font_list = (
+	{'file': 'iosevka-term-medium.ttf', 'size': '26', 'name': 'IosevkaM26'},
+	{'file': 'Trump_Town_Pro.otf', 'size': '42', 'name': 'Trump42'}
+)
+
 
 def _run(cmd):
 	try:
@@ -78,6 +83,15 @@ def build_background(image):
 	_run(['cp', background, os.path.join(_theme_path, 'background.png')])
 
 
+def build_fonts(font_list):
+	for font in font_list:
+		input_file = os.path.join(_pattern_path, font['file'])
+		output_file = os.path.join(_theme_path, font['name'] + '.pf2',)
+
+		convert_cmd = ['grub-mkfont', input_file, '-s', font['size'], '-n', font['name'], '-o', output_file]
+		_run(convert_cmd)
+
+
 def build_theme(options):
 	print(options)
 	_create_dir(_theme_path)
@@ -85,6 +99,7 @@ def build_theme(options):
 	build_images(options)
 	build_config(options)
 	build_background(options.background)
+	build_fonts(_font_list)
 
 
 def parse_command_line():

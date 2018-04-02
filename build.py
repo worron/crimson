@@ -22,6 +22,10 @@ _font_list = (
 	{'file': 'Trump_Town_Pro.otf', 'size': '42', 'name': 'Trump42'}
 )
 
+_warning_message = (
+	"The theme creation is complete. Beware that script doesn't verify input data and result. "
+	"You can check the theme with 'grub2-theme-preview' utility or some virtual machine to be safe."
+)
 
 # Logger setup
 CI = dict(zip(("BLACK", "RED", "GREEN", "YELLOW", "BLUE", "MAGENTA", "CYAN", "WHITE"), range(8)))
@@ -142,11 +146,26 @@ def build_theme(options):
 
 def parse_command_line():
 	parser = ArgumentParser()
-	parser.add_argument('--background', '-i', metavar='FILE', help='Background image')
-	parser.add_argument('--main-color', '-m', metavar='RRGGBB', default='CB252D', help='Main theme color')
-	parser.add_argument('--second-color', '-s', metavar='RRGGBB', default='CCCCCC', help='Second theme color')
-	parser.add_argument('--bg-color', '-b', metavar='RRGGBB', default='1A1A1A', help='Background theme color')
-	parser.add_argument('--log-level', '-l', metavar='LEVEL', default='INFO', help='Log level')
+	parser.add_argument(
+		'--background', '-i', metavar='FILE',
+		help='Background image.'
+	)
+	parser.add_argument(
+		'--main-color', '-m', metavar='RRGGBB', default='CB252D',
+		help='Main color. Active menu items and some other elements.'
+	)
+	parser.add_argument(
+		'--second-color', '-s', metavar='RRGGBB', default='CCCCCC',
+		help='Second color. Inactive menu items and some other elements.'
+	)
+	parser.add_argument(
+		'--bg-color', '-b', metavar='RRGGBB', default='1A1A1A',
+		help='Console background color. Used as main background color if image not specified.'
+	)
+	parser.add_argument(
+		'--log-level', '-l', metavar='LEVEL', default='INFO',
+		help='Log level [DEBUG, INFO, WARNING, ERROR, CRITICAL]'
+	)
 
 	options = parser.parse_args()
 
@@ -161,3 +180,4 @@ if __name__ == "__main__":
 	logger.setLevel(logging.getLevelName(args.log_level))
 
 	build_theme(args)
+	logger.info(_warning_message)

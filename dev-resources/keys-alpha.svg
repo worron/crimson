@@ -1,0 +1,47 @@
+<svg height="64" viewBox="0 0 116.41666 16.933334" width="440" xmlns="http://www.w3.org/2000/svg">
+  <path d="m-.000005 0h116.41666v16.933332h-116.41666z" fill="#1a1a1a"/>
+  <g>
+    <g transform="translate(-10.583332 35.467947)">
+      <path d="m15.875001 4.219553h34.395832v8.995833h-34.395832z" fill="#cb252d"/>
+      <g style="font-weight:bold;font-size:10.583333;font-family:Roboto;letter-spacing:0;word-spacing:0;stroke-width:.264583">
+        <text fill="#1a1a1a" x="17.484549" xml:space="preserve" y="12.228711">
+          <tspan fill="#1a1a1a" font-family="Roboto" font-weight="bold" stroke-width=".264583" x="17.484549" y="12.228711"><tspan fill="#1a1a1a" font-size="9.877778">ENTER</tspan> </tspan>
+        </text>
+        <text fill="#ccc" x="52.743034" xml:space="preserve" y="12.178068">
+          <tspan fill="#ccc" font-family="Roboto" font-weight="bold" stroke-width=".264583" x="52.743034" y="12.178068"><tspan font-size="9.877778">Boot</tspan> </tspan>
+        </text>
+      </g>
+    </g>
+    <g transform="translate(-38.718742)">
+      <path d="m83.343758 3.96875h9.525v8.995833h-9.525z" fill="#cb252d"/>
+      <g style="font-weight:bold;font-size:10.583333;font-family:Roboto;letter-spacing:0;word-spacing:0;stroke-width:.264583">
+        <text fill="#1a1a1a" x="84.942284" xml:space="preserve" y="11.977908">
+          <tspan fill="#1a1a1a" font-family="Roboto" font-weight="bold" stroke-width=".264583" x="84.942284" y="11.977908"><tspan font-size="9.877778">E</tspan> </tspan>
+        </text>
+        <text fill="#ccc" x="95.34095" xml:space="preserve" y="12.178068">
+          <tspan fill="#ccc" font-family="Roboto" font-weight="bold" stroke-width=".264583" x="95.34095" y="12.178068"><tspan font-size="9.877778">Edit</tspan> </tspan>
+        </text>
+      </g>
+    </g>
+    <g transform="translate(46.973878)">
+      <path d="m38.100006 3.96875h9.525v8.995833h-9.525z" fill="#cb252d"/>
+      <g style="font-weight:bold;font-size:10.583333;font-family:Roboto;letter-spacing:0;word-spacing:0;stroke-width:.264583">
+        <text fill="#1a1a1a" x="39.483902" xml:space="preserve" y="11.977908">
+          <tspan fill="#1a1a1a" font-family="Roboto" font-weight="bold" stroke-width=".264583" x="39.483902" y="11.977908"><tspan font-size="9.877778">C</tspan> </tspan>
+        </text>
+        <text fill="#ccc" x="49.822281" xml:space="preserve" y="12.178068">
+          <tspan fill="#ccc" font-family="Roboto" font-size="9.877778" font-weight="bold" stroke-width=".264583" x="49.822281" y="12.178068">Cnsl </tspan>
+        </text>
+      </g>
+    </g>
+    <path d="m-.000003 3.96875h9.525v8.995833h-9.525z" fill="#cb252d"/>
+    <g style="font-weight:bold;font-size:10.583333;font-family:Roboto;letter-spacing:0;word-spacing:0;stroke-width:.264583">
+      <text fill="#1a1a1a" x=".491604" xml:space="preserve" y="12.067136">
+        <tspan fill="#1a1a1a" font-family="Roboto" font-weight="bold" stroke-width=".264583" x=".491604" y="12.067136"><tspan font-size="9.877778">⏎</tspan> </tspan>
+      </text>
+      <text fill="#ccc" x="12.010624" xml:space="preserve" y="12.178068">
+        <tspan fill="#ccc" font-family="Roboto" font-size="9.877778" font-weight="bold" stroke-width=".264583" x="12.010624" y="12.178068">Boot </tspan>
+      </text>
+    </g>
+  </g>
+</svg>

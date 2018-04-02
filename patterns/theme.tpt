@@ -16,7 +16,7 @@ terminal-font: "IosevkaM26 Regular 26"
 
 # this thing dosn't work
 # use custom.cfg to set terminal background
-#terminal-box: "terminal_box_*.png"
+#terminal-box: "terminal_*.png"
 
 # boot menu
 + boot_menu {

@@ -14,7 +14,7 @@ _base_path = os.path.dirname(os.path.abspath(__file__))
 _pattern_path = os.path.join(_base_path, 'patterns')
 _theme_path = os.path.join(_base_path, 'crimson')
 _theme_pattern = 'theme.tpt'
-_console_bg = 'terminal_bg.png'
+_console_bg = 'terminal_c.png'
 _ipe = '.pat'  # image pattern extension
 
 _font_list = (

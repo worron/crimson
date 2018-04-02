@@ -135,7 +135,10 @@ def build_theme(options):
 	replacements = {
 		'$main-color': options.main_color,
 		'$second-color': options.second_color,
-		'$bg-color': options.bg_color
+		'$bg-color': options.bg_color,
+
+		'$console-margin': str(options.console_margin) + '%',
+		'$console-size': str(100 - 2*options.console_margin) + '%',
 	}
 
 	logger.debug(
@@ -143,6 +146,7 @@ def build_theme(options):
 	)
 	logger.debug("Main background file: {0}".format(options.background))
 	logger.debug("Console background file: {0}".format(options.console_background))
+	logger.debug("Console margin: {0}%".format(options.console_margin))
 
 	create_dir(_theme_path)
 	build_images(replacements)
@@ -156,27 +160,31 @@ def parse_command_line():
 	parser = ArgumentParser()
 	parser.add_argument(
 		'--background', '-i', metavar='FILE',
-		help='Main background image.'
+		help="Main background image."
 	)
 	parser.add_argument(
 		'--console-background', '-c', metavar='FILE',
-		help='Console background image.'
+		help="Console background image."
 	)
 	parser.add_argument(
 		'--main-color', '-m', metavar='RRGGBB', default='CB252D',
-		help='Main color. Active menu items and some other elements.'
+		help="Main color. Active menu items and some other elements."
 	)
 	parser.add_argument(
 		'--second-color', '-s', metavar='RRGGBB', default='CCCCCC',
-		help='Second color. Inactive menu items and some other elements.'
+		help="Second color. Inactive menu items and some other elements."
 	)
 	parser.add_argument(
 		'--bg-color', '-b', metavar='RRGGBB', default='1A1A1A',
-		help='Console background color. Used as main background color if image not specified.'
+		help="Console background color. Used as main background color if image not specified."
+	)
+	parser.add_argument(
+		'--console-margin', type=int, default=2,
+		help="Console margin in percents."
 	)
 	parser.add_argument(
 		'--log-level', '-l', metavar='LEVEL', default='INFO',
-		help='Log level [DEBUG, INFO, WARNING, ERROR, CRITICAL]'
+		help='Log level [DEBUG, INFO, WARNING, ERROR, CRITICAL].'
 	)
 
 	options = parser.parse_args()

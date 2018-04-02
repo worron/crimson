@@ -7,16 +7,16 @@ title-font: "Trump42 Regular 42"
 
 desktop-image: "background.png"
 
-terminal-left: "2%"
-terminal-top: "2%"
-terminal-width: "96%"
-terminal-height: "96%"
+terminal-left: "$console-margin"
+terminal-top: "$console-margin"
+terminal-width: "$console-size"
+terminal-height: "$console-size"
 terminal-border: "0"
 terminal-font: "IosevkaM26 Regular 26"
 
 # this thing dosn't work
 # use custom.cfg to set terminal background
-#terminal-box: "terminal_*.png"
+terminal-box: "terminal_*.png"
 
 # boot menu
 + boot_menu {

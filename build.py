@@ -9,6 +9,20 @@ from argparse import ArgumentParser
 from tempfile import NamedTemporaryFile
 
 
+# Script environment setup
+_base_path = os.path.dirname(os.path.abspath(__file__))
+_pattern_path = os.path.join(_base_path, 'patterns')
+_theme_path = os.path.join(_base_path, 'crimson')
+_theme_pattern = 'theme.tpt'
+_console_bg = 'terminal_bg.png'
+_ipe = '.pat'  # image pattern extension
+
+_font_list = (
+	{'file': 'iosevka-term-medium.ttf', 'size': '26', 'name': 'IosevkaM26'},
+	{'file': 'Trump_Town_Pro.otf', 'size': '42', 'name': 'Trump42'}
+)
+
+
 # Logger setup
 CI = dict(zip(("BLACK", "RED", "GREEN", "YELLOW", "BLUE", "MAGENTA", "CYAN", "WHITE"), range(8)))
 COLORS = {'WARNING': CI["YELLOW"], 'INFO': CI["GREEN"], 'DEBUG': CI["BLUE"], 'CRITICAL': CI["RED"], 'ERROR': CI["RED"]}
@@ -38,43 +52,27 @@ stream_handler.setFormatter(color_formatter)
 logger.addHandler(stream_handler)
 
 
-# Script environment setup
-_base_path = os.path.dirname(os.path.abspath(__file__))
-_pattern_path = os.path.join(_base_path, 'patterns')
-_theme_path = os.path.join(_base_path, 'crimson')
-
-_font_list = (
-	{'file': 'iosevka-term-medium.ttf', 'size': '26', 'name': 'IosevkaM26'},
-	{'file': 'Trump_Town_Pro.otf', 'size': '42', 'name': 'Trump42'}
-)
-
-
 # Script functions
 def _run(cmd):
 	try:
 		subprocess.call(cmd)
-		logger.debug("Successfully executed:\n{0}".format(' '.join(cmd)))
+		logger.debug("Successfully executed: {0}".format(' '.join(cmd)))
 	except Exception as e:
-		logger.error("Fail to run command\n{0}\n\n{1}".format(' '.join(cmd), e))
+		logger.error("Fail to run command: {0}\n{1}".format(' '.join(cmd), e))
 		sys.exit(1)
 
 
-def _create_dir(dir_):
+def create_dir(dir_):
 	if not os.path.exists(dir_):
 		os.makedirs(dir_)
 		logger.info("New folder created:\n{0}".format(dir_))
 
 
-def build_images(options):
+def build_images(replacements):
 	tmp_file = NamedTemporaryFile(delete=False)
-	replacements = {
-		'$main-color': options.main_color,
-		'$second-color': options.second_color,
-		'$bg-color': options.bg_color
-	}
 
 	for root, dirs, files in os.walk(_pattern_path):
-		for file_ in filter(lambda f: f.endswith('.pat'), files):
+		for file_ in filter(lambda f: f.endswith(_ipe), files):
 			logger.debug("Creating image from pattern '{0}'".format(file_))
 			with open(os.path.join(root, file_), 'r') as source_, open(tmp_file.name, 'r+') as output_:
 				txt = source_.read()
@@ -85,21 +83,16 @@ def build_images(options):
 				output_.truncate()
 				output_.write(txt)
 
-			png_file = os.path.join(_theme_path, file_.replace('.pat', '.png'))
+			png_file = os.path.join(_theme_path, file_.replace(_ipe, '.png'))
 			_run(['rsvg-convert', tmp_file.name, '-o', png_file])
 
 	# tmp_file.close()
 	os.unlink(tmp_file.name)
 
 
-def build_config(options):
-	replacements = {
-		'$main-color': options.main_color,
-		'$second-color': options.second_color,
-	}
-
-	logger.debug("Creating theme file from pattern")
-	config_pattern = os.path.join(_pattern_path, 'theme.tpt')
+def build_config(replacements, theme_pattern):
+	logger.debug("Creating theme file from pattern '{0}'".format(theme_pattern))
+	config_pattern = os.path.join(_pattern_path, theme_pattern)
 	config_file = os.path.join(_theme_path, 'theme.txt')
 
 	with open(config_pattern, 'r') as source_, open(config_file, 'w') as output_:
@@ -114,7 +107,7 @@ def build_background(image):
 		background = image
 	else:
 		logger.warning("No background image specified, using console background color as fallback")
-		background = os.path.join(_theme_path, 'terminal_bg.png')
+		background = os.path.join(_theme_path, _console_bg)
 
 	_run(['cp', background, os.path.join(_theme_path, 'background.png')])
 
@@ -130,10 +123,19 @@ def build_fonts(font_list):
 
 
 def build_theme(options):
-	_create_dir(_theme_path)
+	replacements = {
+		'$main-color': options.main_color,
+		'$second-color': options.second_color,
+		'$bg-color': options.bg_color
+	}
+	logger.debug(
+		"Colors: main #{0}; second #{1}; bg #{2}".format(options.main_color, options.second_color, options.bg_color)
+	)
+	logger.debug("Background file: {0}".format(options.background))
 
-	build_images(options)
-	build_config(options)
+	create_dir(_theme_path)
+	build_images(replacements)
+	build_config(replacements, _theme_pattern)
 	build_background(options.background)
 	build_fonts(_font_list)
 

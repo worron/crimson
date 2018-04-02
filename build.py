@@ -106,14 +106,19 @@ def build_config(replacements, theme_pattern):
 		output_.write(txt)
 
 
-def build_background(image):
-	if image is not None and os.path.isfile(image):
-		background = image
+def build_background(source_, bg_destination, name):
+	if isinstance(source_, str) and source_[0] != '/':
+		source_ = os.path.join(_base_path, source_)
+
+	if source_ is not None and os.path.isfile(source_):
+		background = source_
 	else:
-		logger.warning("No background image specified, using console background color as fallback")
+		logger.info("No {0} background image specified, using console {1} as fallback".format(*name))
 		background = os.path.join(_theme_path, _console_bg)
 
-	_run(['cp', background, os.path.join(_theme_path, 'background.png')])
+	new_background = os.path.join(_theme_path, bg_destination)
+	if background != new_background:
+		_run(['cp', background, new_background])
 
 
 def build_fonts(font_list):
@@ -132,15 +137,18 @@ def build_theme(options):
 		'$second-color': options.second_color,
 		'$bg-color': options.bg_color
 	}
+
 	logger.debug(
 		"Colors: main #{0}; second #{1}; bg #{2}".format(options.main_color, options.second_color, options.bg_color)
 	)
-	logger.debug("Background file: {0}".format(options.background))
+	logger.debug("Main background file: {0}".format(options.background))
+	logger.debug("Console background file: {0}".format(options.console_background))
 
 	create_dir(_theme_path)
 	build_images(replacements)
 	build_config(replacements, _theme_pattern)
-	build_background(options.background)
+	build_background(options.console_background, _console_bg, ("console", "color"))
+	build_background(options.background, 'background.png', ("main", "background"))
 	build_fonts(_font_list)
 
 
@@ -148,7 +156,11 @@ def parse_command_line():
 	parser = ArgumentParser()
 	parser.add_argument(
 		'--background', '-i', metavar='FILE',
-		help='Background image.'
+		help='Main background image.'
+	)
+	parser.add_argument(
+		'--console-background', '-c', metavar='FILE',
+		help='Console background image.'
 	)
 	parser.add_argument(
 		'--main-color', '-m', metavar='RRGGBB', default='CB252D',
@@ -168,10 +180,6 @@ def parse_command_line():
 	)
 
 	options = parser.parse_args()
-
-	if isinstance(options.background, str) and options.background[0] != '/':
-		options.background = os.path.join(_base_path, options.background)
-
 	return options
 
 

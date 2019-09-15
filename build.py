@@ -16,11 +16,13 @@ _theme_path = os.path.join(_base_path, 'crimson')
 _theme_pattern = 'theme.tpt'
 _console_bg = 'terminal_c.png'
 _ipe = '.pat'  # image pattern extension
+_base_font_size = 26
+_menu_font_size = 42
 
-_font_list = (
-	{'file': 'iosevka-term-medium.ttf', 'size': '26', 'name': 'IosevkaM26'},
-	{'file': 'Trump_Town_Pro.otf', 'size': '42', 'name': 'Trump42'}
-)
+_font_list = {
+	'base': {'file': 'iosevka-term-medium.ttf', 'name': 'IosevkaM'},
+	'menu': {'file': 'Trump_Town_Pro.otf', 'name': 'Trump'}
+}
 
 _warning_message = (
 	"The theme creation is complete. Beware that script doesn't verify input data and result. "
@@ -77,7 +79,7 @@ def build_images(replacements):
 
 	for root, dirs, files in os.walk(_pattern_path):
 		for file_ in filter(lambda f: f.endswith(_ipe), files):
-			logger.debug("Creating image from pattern '{0}'".format(file_))
+			logger.debug("Creating image from the pattern '{0}'".format(file_))
 			with open(os.path.join(root, file_), 'r') as source_, open(tmp_file.name, 'r+') as output_:
 				txt = source_.read()
 				for k, v in replacements.items():
@@ -95,7 +97,7 @@ def build_images(replacements):
 
 
 def build_config(replacements, theme_pattern):
-	logger.debug("Creating theme file from pattern '{0}'".format(theme_pattern))
+	logger.debug("Creating theme file from the pattern '{0}'".format(theme_pattern))
 	config_pattern = os.path.join(_pattern_path, theme_pattern)
 	config_file = os.path.join(_theme_path, 'theme.txt')
 
@@ -122,7 +124,7 @@ def build_background(source_, bg_destination, name):
 
 
 def build_fonts(font_list):
-	for font in font_list:
+	for font in font_list.values():
 		logger.debug("Converting font '{0}'".format(font['file']))
 		input_file = os.path.join(_pattern_path, font['file'])
 		output_file = os.path.join(_theme_path, font['name'] + '.pf2',)
@@ -139,7 +141,13 @@ def build_theme(options):
 
 		'$console-margin': str(options.console_margin) + '%',
 		'$console-size': str(100 - 2*options.console_margin) + '%',
+
+		'$base_font_size': str(options.base_font_size),
+		'$menu_font_size': str(options.menu_font_size),
 	}
+
+	_font_list['base']['size'] = str(options.base_font_size)
+	_font_list['menu']['size'] = str(options.menu_font_size)
 
 	logger.debug(
 		"Colors: main #{0}; second #{1}; bg #{2}".format(options.main_color, options.second_color, options.bg_color)
@@ -147,6 +155,7 @@ def build_theme(options):
 	logger.debug("Main background file: {0}".format(options.background))
 	logger.debug("Console background file: {0}".format(options.console_background))
 	logger.debug("Console margin: {0}%".format(options.console_margin))
+	logger.debug("Base font size: {0}; menu font size: {1}".format(options.base_font_size, options.menu_font_size))
 
 	create_dir(_theme_path)
 	build_images(replacements)
@@ -185,6 +194,14 @@ def parse_command_line():
 	parser.add_argument(
 		'--log-level', '-l', metavar='LEVEL', default='INFO',
 		help='Log level [DEBUG, INFO, WARNING, ERROR, CRITICAL].'
+	)
+	parser.add_argument(
+		'--base-font-size', type=int, default=_base_font_size,
+		help="Console margin in percents."
+	)
+	parser.add_argument(
+		'--menu-font-size', type=int, default=_menu_font_size,
+		help="Console margin in percents."
 	)
 
 	options = parser.parse_args()

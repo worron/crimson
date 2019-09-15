@@ -2,7 +2,7 @@
 
 # general settings
 title-color: "#$main-color"
-title-font: "Trump42 Regular 42"
+title-font: "Trump Regular $menu_font_size"
 #title-text: "Crimson Boot"
 
 desktop-image: "background.png"
@@ -12,9 +12,9 @@ terminal-top: "$console-margin"
 terminal-width: "$console-size"
 terminal-height: "$console-size"
 terminal-border: "0"
-terminal-font: "IosevkaM26 Regular 26"
+terminal-font: "IosevkaM Regular $base_font_size"
 
-# this thing dosn't work
+# this thing doesn't work
 # use custom.cfg to set terminal background
 terminal-box: "terminal_*.png"
 
@@ -26,7 +26,7 @@ terminal-box: "terminal_*.png"
 	height = 70%
 
 	item_color = "#$second-color"
-	item_font = "Trump42 Regular 42"
+	item_font = "Trump Regular $menu_font_size"
 
 	selected_item_color= "#$main-color"
 	selected_item_pixmap_style = "selector_*.png"
@@ -34,7 +34,7 @@ terminal-box: "terminal_*.png"
 	icon_height = 0
 	icon_width = 5
 
-	item_height = 42
+	item_height = $menu_font_size
 	item_padding = 0
 	item_icon_space = 0
 	item_spacing = 10

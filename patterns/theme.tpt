@@ -45,7 +45,7 @@ terminal-box: "terminal_*.png"
 # hotkeys image
 + image {
 	top = 100%-120
-	left = 760
+	left = 50%-200
 	width = 400
 	height = 42
 
